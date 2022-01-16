@@ -57,7 +57,8 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath=”{.data.password}” | base64 -d && echo
 
+cd argocd
 argocd login <ARGOCD_SERVER>
-argocd app create azuredemo --repo https://github.com/tcsgit/azuredemo.git --path helm/demo-chart --dest-server https://kubernetes.default.svc --dest-namespace asademo
+kubectl apply -n argocd -f asademo-argocd-application.yaml
 
 ```
