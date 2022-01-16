@@ -1,0 +1,65 @@
+# -------------------- ASADemo Namespace ------------------- #
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: asademo
+
+---
+# -------------------- ASADemo Service --------------------- #
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: asademo
+  namespace: asademo
+spec:
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  selector:
+    app: asademo
+
+---
+# ------------------- ASADemo Deployment ------------------- #
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: asademo
+  namespace: asademo
+  labels:
+    app: asademo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: asademo  
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  minReadySeconds: 5
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app: asademo
+    spec:
+      containers:
+      - name: asademo
+        image: tcsgregistry.azurecr.io/asademo:1.0
+        #imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          successThreshold: 1        
+
