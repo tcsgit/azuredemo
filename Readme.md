@@ -8,7 +8,7 @@
 
 2. Helm - 3.x.x
 
-3. ArgoCD - 2.2.2
+3. ArgoCD - 2.2.x
 
 ## Steps to Deployment
 
