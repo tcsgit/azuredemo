@@ -26,7 +26,7 @@ cd terraform
 terraform apply
 ```
 
-**3. Configure kubectl to connect to your kubernetes cluster **
+**3. Configure kubectl to connect to your kubernetes cluster**
 
 ```bash
 az aks get-credentials --admin --name tcsgcluster --resource-group tcsgresources
